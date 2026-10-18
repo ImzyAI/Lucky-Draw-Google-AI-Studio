@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Events collection: configuration and status
+    match /events/{eventId} {
+      allow read, write: if true;
+    }
+
+    // Prizes collection: stock and descriptions
+    match /prizes/{prizeId} {
+      allow read, write: if true;
+    }
+
+    // Participants: records, statuses, tokens, and draw results
+    match /participants/{participantId} {
+      allow read, write: if true;
+    }
+
+    // Claims: prize handover verification records
+    match /claims/{claimId} {
+      allow read, write: if true;
+    }
+
+    // Audit logs: system and participant activity
+    match /auditLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Catch-all deny for any other documents
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "Event": {
+      "title": "Event",
+      "description": "Event configuration and status for the Lucky Draw",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Event identifier" },
+        "name": { "type": "string", "description": "Event name" },
+        "date": { "type": "string", "description": "Event date" },
+        "location": { "type": "string", "description": "Event location" },
+        "status": { "type": "string", "enum": ["OPEN", "PAUSED", "CLOSED"], "description": "Current status of the lucky draw" },
+        "totalParticipants": { "type": "number", "description": "Total expected participants" },
+        "updatedAt": { "type": "string", "description": "Last update timestamp" }
+      },
+      "required": ["id", "name", "status"]
+    },
+    "Participant": {
+      "title": "Participant",
+      "description": "Lucky draw participant with secure QR token",
+      "type": "object",
+      "properties": {
+        "participantId": { "type": "string", "description": "Unique participant identifier" },
+        "participantNumber": { "type": "string", "description": "Participant sequential or badge number" },
+        "participantName": { "type": "string", "description": "Participant full name or designation" },
+        "division": { "type": "string", "description": "Divisyen peserta (Divisyen 1 hingga Divisyen 8)" },
+        "secureToken": { "type": "string", "description": "High-entropy unguessable token for QR URL" },
+        "status": { "type": "string", "enum": ["NOT_PLAYED", "PLAYED"], "description": "Play status" },
+        "prizeId": { "type": "string", "description": "Won prize identifier if any" },
+        "prizeName": { "type": "string", "description": "Won prize title if any" },
+        "claimCode": { "type": "string", "description": "Alphanumeric claim code for verification" },
+        "claimStatus": { "type": "string", "enum": ["NOT_APPLICABLE", "UNCLAIMED", "CLAIMED"], "description": "Prize redemption status" },
+        "playedAt": { "type": "string", "description": "Timestamp when draw occurred" },
+        "claimedAt": { "type": "string", "description": "Timestamp when prize was claimed" },
+        "claimedBy": { "type": "string", "description": "AJK identifier or name who verified claim" }
+      },
+      "required": ["participantId", "participantNumber", "secureToken", "status", "claimStatus"]
+    },
+    "Prize": {
+      "title": "Prize",
+      "description": "Lucky draw gift and inventory record",
+      "type": "object",
+      "properties": {
+        "prizeId": { "type": "string", "description": "Prize identifier" },
+        "prizeName": { "type": "string", "description": "Prize name" },
+        "description": { "type": "string", "description": "Prize description or features" },
+        "imageUrl": { "type": "string", "description": "Optional image URL for the prize" },
+        "totalQuantity": { "type": "number", "description": "Initial allocated quantity" },
+        "remainingQuantity": { "type": "number", "description": "Remaining available stock" },
+        "prizeCategory": { "type": "string", "description": "Category e.g. Grand Prize, Premium, Standard" },
+        "active": { "type": "boolean", "description": "Whether prize is currently active in draw pool" },
+        "order": { "type": "number", "description": "Display ranking order" }
+      },
+      "required": ["prizeId", "prizeName", "totalQuantity", "remainingQuantity", "prizeCategory", "active"]
+    },
+    "Claim": {
+      "title": "Claim",
+      "description": "Prize claim audit verification record",
+      "type": "object",
+      "properties": {
+        "claimId": { "type": "string", "description": "Unique claim identifier" },
+        "claimCode": { "type": "string", "description": "Claim code" },
+        "participantId": { "type": "string", "description": "Participant identifier" },
+        "participantName": { "type": "string", "description": "Participant name" },
+        "prizeId": { "type": "string", "description": "Prize identifier" },
+        "prizeName": { "type": "string", "description": "Prize name" },
+        "claimedAt": { "type": "string", "description": "Timestamp of claim verification" },
+        "ajkEmail": { "type": "string", "description": "Email of AJK verifying claim" },
+        "ajkName": { "type": "string", "description": "Name of AJK verifying claim" }
+      },
+      "required": ["claimId", "claimCode", "participantId", "prizeId", "claimedAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System event audit trail",
+      "type": "object",
+      "properties": {
+        "logId": { "type": "string", "description": "Unique log record ID" },
+        "action": { "type": "string", "description": "Action performed (DRAW, CLAIM, STATUS_CHANGE, SEED)" },
+        "details": { "type": "string", "description": "Human readable description of the event" },
+        "actor": { "type": "string", "description": "Who performed the action (participant token, admin, ajk)" },
+        "timestamp": { "type": "string", "description": "Timestamp ISO string" }
+      },
+      "required": ["logId", "action", "details", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Event configuration and real-time status"
+    },
+    "/participants/{participantId}": {
+      "schema": "Participant",
+      "description": "Participant records, status, and tokens"
+    },
+    "/prizes/{prizeId}": {
+      "schema": "Prize",
+      "description": "Prizes inventory with stock tracking"
+    },
+    "/claims/{claimId}": {
+      "schema": "Claim",
+      "description": "Verified prize claim logs"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Audit trail of participant draws and administrative actions"
+    }
+  }
+}

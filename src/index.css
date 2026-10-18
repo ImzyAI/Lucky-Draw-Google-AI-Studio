@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body,
+  body.theme-dark {
+    background-color: #0b0c10;
+    color: #f1f5f9;
+  }
+  
+  .font-serif-vintage {
+    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Vintage Gold Gradients & Textures */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #f5e6a3 0%, #d4af37 50%, #aa7c11 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-text-light {
+  background: linear-gradient(135deg, #94691e 0%, #b38628 50%, #704e12 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #dfba73 0%, #c5a059 40%, #8c6721 100%);
+}
+
+.gold-foil-border {
+  border-image: linear-gradient(to right, #8c6721, #f5e6a3, #d4af37, #8c6721) 1;
+}
+
+.gold-card-shadow {
+  box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.15), 0 0 1px 1px rgba(212, 175, 55, 0.2);
+}
+
+.gold-card-shadow-light {
+  box-shadow: 0 10px 25px -8px rgba(160, 120, 40, 0.12), 0 0 1px 1px rgba(180, 140, 50, 0.25);
+}
+
+/* Overlapping Notification Stacking */
+.notification-overlap-stack {
+  position: relative;
+}
+
+.notification-overlap-stack > *:not(:first-child) {
+  margin-top: -3.5rem;
+  box-shadow: 0 -10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Print Optimization for Lanyard Badges */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide everything not in print view */
+  header,
+  #global-winner-notifications,
+  .no-print {
+    display: none !important;
+  }
+
+  .lanyard-card-print {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+  }
+}
+
+/* Background Ambient Keyframe Animations */
+@keyframes floatBlob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(-30px, 40px) scale(1.08);
+  }
+  100% {
+    transform: translate(25px, -20px) scale(0.96);
+  }
+}
+
+@keyframes floatBlobReverse {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(35px, -30px) scale(1.1);
+  }
+  100% {
+    transform: translate(-25px, 20px) scale(0.94);
+  }
+}
+
+@keyframes twinkleFloat {
+  0% {
+    opacity: 0.15;
+    transform: translateY(0px) scale(0.85);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateY(-12px) scale(1.15);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(-24px) scale(0.9);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinSlowReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+

@@ -1,0 +1,10 @@
+{
+  "name": "Majlis Apresiasi Lembaga Pengawas Sekolah 2026 SMKBSP",
+  "description": "Two-stage digital lucky draw system with Grand Prize Stage Control, school collection verification, and certified fair random distribution for Majlis Apresiasi Lembaga Pengawas Sekolah 2026 SMKBSP.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
